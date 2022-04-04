@@ -1,0 +1,335 @@
+/* * {
+    border: 2px solid black;
+} */
+
+/* carousel bottom part */
+div.carousel {
+
+    width: 100%;
+    margin: 0 auto;
+    margin-top: 0px;
+    padding-top: 0px;
+    display: flex;
+    justify-content: center;   
+
+    /* border: 6px solid red; */
+    
+    
+    
+}
+div.thumbs-wrapper.axis-vertical{
+    
+
+    display: flex;
+    justify-content: center;
+    width: 80%;
+    padding-top: 21px;
+    overflow: auto;
+
+    /* border: 6px solid rgb(0, 255, 81); */
+    
+    /* overflow: visible; */
+    position: fixed;
+    left: 0px;
+    bottom: -10px;
+
+    /* padding-bottom: 0px; */
+    
+}
+
+button.control-arrow.control-next {
+    /* background-color: black; */
+    margin-left: 100px;
+    visibility: hidden;
+}
+button.control-arrow.control-prev {
+    /* background-color: black; */
+    visibility: hidden;
+}
+
+ul.thumbs.animated {
+    /* margin-left: 50px; */
+    margin-right: 500px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    width: 80%;
+    /* width: 730px; */
+    padding-left: 130px;
+    padding-right: 90px;
+    /* overflow: auto; */
+
+    /* border: 6px solid rgb(132, 0, 255); */
+    
+    
+}
+
+.thumb {
+    border-radius: 12px;
+    height: 3rem;
+    font-size: 14px;
+    font-weight: bold;
+    background-color: #EAFFD0;
+    /* border : "6px solid black"; */
+    /* rgba(139,194,76,1); */
+    /* rgba(173, 166, 166, 0.4); */
+    /* padding: 10px; */
+}
+
+/* carousel  upper part*/
+.carousel-root {
+    /* height: 200px; */
+    position: fixed;
+    left: "10px";
+
+    /* 60% before */
+    width: 20%;  
+    margin: auto;
+    margin-top: 0rem;
+    /* border: 3px solid black; */
+
+    /* background-color: gray; */
+    /* overflow: visible; */
+    
+
+}
+.carousel.carousel-slider {
+    /* visibility: hidden; */
+    /* margin: auto; */
+    /* width: 100%; */
+    /* border: 3px solid red; */
+    /* padding: 10px; */
+    /* margin-left: 0px; */
+
+    width: 100%;
+    margin: auto;
+    margin-top: 0rem;
+    /* border: 3px solid red; */
+
+    /* border: 3px solid red; */
+}
+
+.slider-wrapper.axis-horizontal {
+    
+    
+    /* text-align: center; */
+    /* before 33% */
+    width: 100%;
+    margin: auto;
+    margin-top: 0rem;
+    /* border: 3px solid blue; */
+    padding: auto;
+    /* padding-left: 0px; */
+    /* padding-right: 20px; */
+    margin-left: 2%;
+    
+
+}
+
+.slider.animated {
+    /* margin-left: 0; */
+    /* position: absolute; */
+    /* top: 50%;
+    left: 50%; */
+    /* transform: translate(-70%, -30%); */
+
+    margin: auto;
+    width: 100%;
+    /* border: 3px solid green; */
+    /* padding: 10px; */
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+.carousel .slide {
+    
+    /* width: 10rem; */
+    /* margin-left: 20px;
+    margin-right: 20px; */
+    /* padding: 0 300px 0 300px; */
+    /* border-radius: 25px; */
+    /* width: 80vh; */
+    z-index: auto;
+    height: 60.5vh ;
+    background-color: rgba(173, 166, 166, 0.2);
+    /* background-color: rgba(255,255,255,0.6); */
+    /* margin: 30px; */
+  /* background-color: #ffffff; */
+  /* border: 1px solid black; */
+}
+.card{
+    background-color: white;
+    /* color: black; */
+}
+
+
+tr {
+    border-bottom: solid 2px red;
+}
+td{
+    /* border-bottom: solid 1px grey; */
+    /* border-bottom: solid 2px red; */
+    /* text-align: left; */
+    /* border-color: rgb(27, 128, 52); */
+    padding: 0px;
+    padding-left: 7px;
+    font-size: 12px;
+}
+
+/* width */
+div.thumbs-wrapper.axis-vertical::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  div.thumbs-wrapper.axis-vertical::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  div.thumbs-wrapper.axis-vertical::-webkit-scrollbar-thumb {
+    background: grey; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  div.thumbs-wrapper.axis-vertical::-webkit-scrollbar-thumb:hover {
+    background: rgb(150, 148, 148); 
+  }
+  /* ############################################## */
+/* width */
+  div.scroll::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  div.scroll::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  div.scroll::-webkit-scrollbar-thumb {
+    background: grey; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  div.scroll::-webkit-scrollbar-thumb:hover {
+    background: rgb(150, 148, 148); 
+  }
+/* ########################################## */
+/* width */
+  .scroll1::-webkit-scrollbar {
+    width: 20px;
+  }
+  
+  /* Track */
+  .scroll1::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 5px grey; 
+    border-radius: 10px;
+  }
+   
+  /* Handle */
+  .scroll1::-webkit-scrollbar-thumb {
+    background: grey; 
+    border-radius: 10px;
+  }
+  
+  /* Handle on hover */
+  .scroll1::-webkit-scrollbar-thumb:hover {
+    background: rgb(150, 148, 148); 
+  }
+
+/* div.scroll{
+    background-color: red;
+    overflow: scroll;
+
+} */
+/* .mystyle1 {
+    width: 20%;
+    margin: auto;
+    margin-top: 0rem;
+} 
+.mystyle2 {
+    width: 40%;
+    margin: auto;
+    margin-top: 0rem;
+} 
+.mystyle3 {
+    width: 60%;
+    margin: auto;
+    margin-top: 0rem;
+}  */
+/* .carousel .slide img {
+    max-height: 100%;
+    width: auto;
+} */
+
+/* .image {
+    margin: 0 auto;
+    height: 100%;
+    width: 100vw;
+}
+
+@media only screen and (max-width: 1200px){
+    .carousel {
+        height: 90vh;
+    }
+    .carousel .slide img{
+        margin: 10vh auto;
+        width: 100vw;
+    }
+}
+@media only screen and (max-width: 900px){
+    .carousel {
+        height: 80vh;
+    }
+    .carousel .slide img{
+        margin: 10vh auto;
+        width: 100vw;
+    }
+}
+
+@media only screen and (max-width: 900px){
+    .carousel {
+        height: 80vh;
+    }
+    .carousel .slide img{
+        margin: 10vh auto;
+        width: 100vw;
+    }
+}
+@media only screen and (max-width: 750px){
+    .carousel {
+        height: 70vh;
+    }
+    .carousel .slide img{
+        margin: 10vh auto;
+        width: 100vw;
+    }
+}
+@media only screen and (max-width: 650px){
+    .carousel {
+        height: 60vh;
+    }
+    .carousel .slide img{
+        margin: 10vh auto;
+        width: 100vw;
+    }
+}
+@media only screen and (max-width: 500px){
+    .carousel {
+        height: 50vh;
+    }
+    .carousel .slide img{
+        margin: 10vh auto;
+        width: 100vw;
+    }
+} */

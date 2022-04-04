@@ -1,24 +1,33 @@
-import logo from './logo.svg';
 import './App.css';
+// import Slider from './components/Slider';
+// import {Routes, Route} from 'react-router-dom';
+import InputForm from './components/InputForm';
+import Mapp from './components/Mapp';
+// import Itineraries from './components/Itineraries';
+import Navbar from './components/Navbar';
+import "./delhimap.png";
 
 function App() {
+  
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+
+      {/* <Mapp/> */}
+      <Mapp/>
+      {/* <div className="ma"> */}
+        {/* <Navbar/> 
+        <InputForm/> */}
+       {/* </div> */}
+      
+        
+      
+      {
+      /* <Routes> 
+          <Route path="/slider" element={<Slider itineraryname="Itinerary"/>} />
+      </Routes> */
+      }
+    </>
   );
 }
 

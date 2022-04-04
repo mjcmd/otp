@@ -1,0 +1,97 @@
+
+.leaflet-popup-close-button {
+    /* visibility: hidden; */
+}
+.leaflet-popup-content-wrapper, .leaflet-popup-tip {
+border: 2px solid green;
+background-color: rgb(226, 253, 196);
+}
+.leaflet-popup-tip {
+    background-color: green;
+}
+
+
+.leaflet-popup-content-wrapper .leaflet-popup-content {
+/* border: 2px solid blue; */
+/* background-color: aqua; */
+}
+
+.leaflet-popup-tip-container {
+/* border: 2px solid red; */
+/* background-color: blueviolet; */
+}
+
+
+/* start stop sticky tooltip */
+.startStopStickyToolTipClass {
+  border-radius: 25px;
+  background: rgb(226, 253, 196);
+  border: 2px solid green;
+}
+.leaflet-tooltip-left.startStopStickyToolTipClass::before {
+  border-left-color: green;
+  border-left-width: 100px;
+  border-bottom-width: 2px;
+  position: inherit;
+  right: -94px;
+}
+.leaflet-tooltip-right.startStopStickyToolTipClass::before {
+  border-right-color: green;
+  border-right-width: 100px;
+  border-bottom-width: 2px;
+  position: inherit;
+  left: -94px;
+}
+
+
+/* end stop sticky tooltip */
+.endStopStickyToolTipClass {
+  border-radius: 25px;
+  background: rgb(226, 253, 196);
+  border: 2px solid green;
+}
+.leaflet-tooltip-left.endStopStickyToolTipClass::before {
+  border-left-color: green;
+  border-left-width: 50px;
+  border-bottom-width: 2px;
+  position: inherit;
+  right: -44px;
+}
+.leaflet-tooltip-right.endStopStickyToolTipClass::before {
+  border-right-color: green;
+  border-right-width: 50px;
+  border-bottom-width: 2px;
+  position: inherit;
+  left: -44px;
+}
+/* tooltip */
+.toolTipClass {
+  background: rgb(226, 253, 196);
+  border: 2px solid green;
+}
+.leaflet-tooltip-left.toolTipClass::before {
+  border-left-color: green;
+}
+.leaflet-tooltip-right.toolTipClass::before {
+  border-right-color: green;
+}
+
+#map {
+    /* position: absolute;
+    z-index: -400; */
+    width: 100%;
+    height: 100vh;
+    
+}
+
+.leaflet-container {
+    /* width: 100%;
+    height: 100vh; */
+}
+
+* {
+    /* -webkit-font-smoothing: antialiased; */
+    /* padding: 0;
+    margin: 0;  */
+    box-sizing: border-box;
+}

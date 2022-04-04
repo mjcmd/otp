@@ -1,0 +1,584 @@
+
+
+#############################################
+
+
+                        if(direction === "DEPART"){
+                            stepCircle.bindPopup( `<div> Start on ${bogusName?"path":streetName} heading ${absoluteDir}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` ).on('mouseover', function (e) {
+                                this.openPopup();
+                              }).on('mouseout', function (e) {
+                                this.closePopup();
+                              });
+                            // steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}> Start on {bogusName?"path":streetName} heading {absoluteDir} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+                          }
+                          else if(direction === "UTURN_LEFT" || direction === "UTURN_RIGHT"){
+                            stepCircle.bindPopup( `<div> ${direction} to continue on ${bogusName?"path":streetName} (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` ).on('mouseover', function (e) {
+                                this.openPopup();
+                              }).on('mouseout', function (e) {
+                                this.closePopup();
+                              });
+                            // steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>{direction} to continue on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+                          }
+                          else if(direction === "CIRCLE_CLOCKWISE" || direction === "CIRCLE_COUNTERCLOCKWISE"){
+                            if(direction === "CIRCLE_CLOCKWISE"){
+                                stepCircle.bindPopup( `<div> Take roundabout clockwise to ${itinerary.legs[i].steps[j].exit} exit on ${bogusName?"path":streetName}} (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` ).on('mouseover', function (e) {
+                                    this.openPopup();
+                                  }).on('mouseout', function (e) {
+                                    this.closePopup();
+                                  });
+                            //   steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Take roundabout clockwise to {itinerary.legs[i].steps[j].exit} exit on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+                            }
+                            else{
+                                stepCircle.bindPopup( `<div> Take roundabout counterclockwise to ${itinerary.legs[i].steps[j].exit} exit on ${bogusName?"path":streetName}} (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` ).on('mouseover', function (e) {
+                                    this.openPopup();
+                                  }).on('mouseout', function (e) {
+                                    this.closePopup();
+                                  });
+                            //   steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Take roundabout counterclockwise to {itinerary.legs[i].steps[j].exit} exit on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+                            }
+                          }
+                          else if(direction === "HARD_LEFT" || direction === "HARD_RIGHT"){
+                            if(direction === "HARD_LEFT"){
+                              stepCircle.bindPopup( `<div> HARD LEFT on to ${bogusName?"path":streetName}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` ).on('mouseover', function (e) {
+                                this.openPopup();
+                              }).on('mouseout', function (e) {
+                                this.closePopup();
+                              });
+                            }
+                            else{
+                              stepCircle.bindPopup( `<div> <img > HARD RIGHT on to ${bogusName?"path":streetName} (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` ).on('mouseover', function (e) {
+                                this.openPopup();
+                              }).on('mouseout', function (e) {
+                                this.closePopup();
+                              });
+                            }
+                          }
+                          else if(direction === "ELEVATOR"){
+                            stepCircle.bindPopup( `<div> Use Elevator (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` ).on('mouseover', function (e) {
+                                this.openPopup();
+                              }).on('mouseout', function (e) {
+                                this.closePopup();
+                              });
+                            // steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Use Elevator</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+                          }
+                          else{
+                            stepCircle.bindPopup( `<div> <img src="src/components/images/logo192.png" alt="test data" width="20" height="20">${direction} on to ${bogusName?"path":streetName} (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` ).on('mouseover', function (e) {
+                                this.openPopup();
+                              }).on('mouseout', function (e) {
+                                this.closePopup();
+                              });
+                            // steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}> {direction} on to {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+                          }
+
+
+
+############polyline with steps latlngs#############
+ //#################################################layers############
+            var multiSegments = [];
+
+            const startFlagIcon = L.icon({
+                iconUrl: "http://localhost:8080/images/marker-flag-start-shadowed.png",
+                iconSize:     [60, 60], // size of the icon
+                iconAnchor: [54, 50]
+                });
+            var startMarker = L.marker([itinerary.legs[0].from.lat, itinerary.legs[0].from.lon], {icon:startFlagIcon});
+            multiSegments.push(startMarker);
+
+            
+
+            for (let i=0; i < itinerary.legs.length && itinerary.legs.length !== 0; i++){
+               
+                if(itinerary.legs[i].mode === "WALK"){
+                    console.log("walk leg");
+
+                    var walkLatLngs = [];
+
+                    var from = [];
+                    from.push(itinerary.legs[i].from.lat);
+                    from.push(itinerary.legs[i].from.lon);
+                    walkLatLngs.push(from);
+
+                    for (let j=0; j < itinerary.legs[i].steps.length && itinerary.legs[i].steps.length !== 0; j++){
+                        var temp2 = [];
+                        temp2.push(itinerary.legs[i].steps[j].lat);
+                        temp2.push(itinerary.legs[i].steps[j].lon);
+                        walkLatLngs.push(temp2);
+
+                        var stepCircle = L.circleMarker(temp2, {radius: 5.5, color: 'black', fillColor: 'rgba(200, 200, 200, 1)', weight: '2', fillOpacity: '1'});
+                        multiSegments.push(stepCircle);
+                    }
+                    
+                    var to = [];
+                    to.push(itinerary.legs[i].to.lat);
+                    to.push(itinerary.legs[i].to.lon);
+                    walkLatLngs.push(to);
+
+                    var walkPolyline = L.polyline(walkLatLngs, {color: 'rgba(128, 127, 127, .6)', weight: '8'}); //.addTo(map);
+                    multiSegments.push(walkPolyline);
+                }
+                
+                if(itinerary.legs[i].mode === "BUS"){
+                    console.log("bus leg")
+
+                    var busLatLngs = [];
+
+                    var from = [];
+                    from.push(itinerary.legs[i].from.lat);
+                    from.push(itinerary.legs[i].from.lon);
+                    busLatLngs.push(from);
+
+                    for (let j=0; j < itinerary.legs[i].intermediateStops.length && itinerary.legs[i].intermediateStops.length !== 0; j++){
+                        var temp3 = [];
+                        temp3.push(itinerary.legs[i].intermediateStops[j].lat);
+                        temp3.push(itinerary.legs[i].intermediateStops[j].lon);
+                        busLatLngs.push(temp3);
+                    }
+
+                    var to = [];
+                    to.push(itinerary.legs[i].to.lat);
+                    to.push(itinerary.legs[i].to.lon);
+                    busLatLngs.push(to);
+                    var busPolyline = L.polyline(busLatLngs, {color: 'rgba(0,255,0,.6)', weight: '8'}); //.addTo(map);
+                    multiSegments.push(busPolyline);
+                }
+
+                var fromCircle = L.circleMarker([itinerary.legs[i].from.lat, itinerary.legs[i].from.lon], {radius: 6, color: 'black', fillColor: 'white', weight: '2', fillOpacity: '1'});
+                multiSegments.push(fromCircle);
+            
+            }
+            // var startCircle = L.circleMarker([itinerary.legs[0].from.lat, itinerary.legs[0].from.lon], {radius: 6, color: 'black', fillColor: 'white', weight: '2', fillOpacity: '1'});
+            // multiSegments.push(startCircle);
+            var endCircle = L.circleMarker([itinerary.legs[itinerary.legs.length - 1].to.lat, itinerary.legs[itinerary.legs.length - 1].to.lon], {radius: 6, color: 'black', fillColor: 'white', weight: '2', fillOpacity: '1'});
+            multiSegments.push(endCircle);
+
+            const endFlagIcon = L.icon({
+                iconUrl: "http://localhost:8080/images/marker-flag-end-shadowed.png",
+                iconSize:     [60, 60], // size of the icon
+                iconAnchor: [54, 50]
+                });
+            let endMarker = L.marker([itinerary.legs[itinerary.legs.length - 1].to.lat, itinerary.legs[itinerary.legs.length - 1].to.lon], {icon:endFlagIcon});
+            multiSegments.push(endMarker);
+            
+
+            var multiSegmentPolyline = L.featureGroup(multiSegments).addTo(map);
+            map.fitBounds(multiSegmentPolyline.getBounds());
+
+
+################for arr.splice() insert ###########
+let k = 0;
+      let temp1 = [];
+      let temp2 = [];
+      while(k < j){
+        temp1.push(cards[k]);
+        cards.shift();
+
+        temp2.push(pushedInd[k]);
+        pushedInd.shift();
+
+        k++;
+      }
+      console.log(cards)
+      temp1.push(rows[curInd]);
+      while(k < cards.length){
+        temp1.push(cards[k]);
+        cards.shift();
+
+        temp2.push(pushedInd[k]);
+        pushedInd.shift();
+
+        k++;
+      }
+      k = 0;
+      while(temp1.length !== 0){
+        cards.push(temp1[k]);
+        temp1.shift();
+
+        pushedInd.push(temp2[k]);
+        temp2.shift();
+
+        k++;
+      }
+
+
+######table version############################
+import React from 'react'
+// import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
+// import './css/itinerary.css'
+import './css/itinerary1.css'
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import ArrowRightAltIcon from '@mui/icons-material/ArrowRightAlt';
+import DirectionsTransitIcon from '@mui/icons-material/DirectionsTransit';
+
+
+export default function Itinerary1(props) {
+
+    let itinerary = props.itinerary;
+
+
+    let uniq = 1;
+    let steps = [];
+    // let interStops = [];
+    for(let i = 0; itinerary.legs != null && i < itinerary.legs.length; i++ ){
+      steps.push(<tr key={uniq}><th style={{padding: "0px"}}>{itinerary.legs[i].mode}, {(itinerary.legs[i].distance*0.00062137).toFixed(2)}miles, {(itinerary.legs[i].duration/60).toFixed(0)}min </th></tr>);
+
+      uniq += 1;
+      for(let j = 0; j < itinerary.legs[i].steps.length; j++ ){
+          let direction = itinerary.legs[i].steps[j].relativeDirection ;
+          let streetName = itinerary.legs[i].steps[j].streetName ;
+          let stepDistance = itinerary.legs[i].steps[j].distance*0.00062137;
+          steps.push(<tr key={uniq} style={{borderBottom: "solid 1px gray"}}><td>{direction} on to {streetName}</td><td>{stepDistance.toFixed(2)} miles</td></tr>);
+          uniq += 1;
+      } 
+      
+      if(itinerary.legs[i].mode === "BUS"){
+          steps.push(<tr key={uniq} style={{borderBottom: "solid 1px gray"}}><td style={{fontWeight: "600"}}>Boart At:</td><td>{itinerary.legs[i].from.name}</td></tr>)
+          uniq += 1;
+          
+          if(itinerary.legs[i].intermediateStops == null){
+            steps.push(<tr key={uniq} style={{borderBottom: "solid 1px gray"}}><td style={{fontWeight: "600"}}>0 Intermediate Stops</td></tr>);
+            uniq += 1;
+          }
+          else{
+            steps.push(<tr key={uniq} style={{borderBottom: "solid 1px gray"}}><td style={{fontWeight: "600"}}>{itinerary.legs[i].intermediateStops.length} Intermediate Stops</td></tr>);
+            uniq += 1;
+          }
+          
+          if(itinerary.legs[i].intermediateStops != null && itinerary.legs[i].intermediateStops.length !== 0){
+            // interStops.push(<tr key={uniq}><th>{itinerary.legs[i].intermediateStops.length} Intermediate Stops</th></tr>);
+            // uniq += 1;
+    
+            for(let j = 0; j < itinerary.legs[i].intermediateStops.length; j++ ){
+              let arrivalTime = itinerary.legs[i].intermediateStops[j].arrival ;
+              let stopName = itinerary.legs[i].intermediateStops[j].name ;
+              steps.push(<tr key={uniq} style={{borderBottom: "solid 1px gray"}}><td>{(new Date(arrivalTime)).toString().slice(0, 21)}</td><td>{stopName}</td></tr>);
+              uniq += 1;
+            } 
+          }
+          
+              steps.push(<tr key={uniq} style={{borderBottom: "solid 1px gray"}}><td style={{fontWeight: "600"}}>Alight At:</td><td>{itinerary.legs[i].to.name}</td></tr>)
+          uniq += 1;
+          // alightAt = itinerary.legs[i].to.name;
+      }
+    }
+    
+    let tripSummary = []; 
+    let fare = ""
+    if(itinerary.hasOwnProperty("fare")){
+        if("fare" in itinerary.fare){
+          if("regular" in itinerary.fare.fare){
+            fare =(<div>Fare: {itinerary.fare.fare.regular.currency.symbol} {itinerary.fare.fare.regular.cents/100}</div>);
+          }
+        }
+      }
+    let summa = <div key={0} style={{fontSize: "14px", textAlign: "left", height: "110px", backgroundColor: "rgba(245,240,246,1)", paddingLeft: '7px', paddingTop: "2px"}}>
+    <div style={{fontWeight: "bold"}}>Trip Summary</div>
+      <div> Travel: {(new Date(itinerary.startTime)).toString().slice(0, 21)} <br/>
+        Time: {(itinerary.duration/60).toFixed(2)} min <br />
+        Total Walk: {(itinerary.walkDistance*0.00062137).toFixed(2)} miles <br />
+        {fare}
+      </div>
+    </div>
+    tripSummary.push(summa);
+  
+    
+  
+   
+  return (
+    <>
+        <div style={{height: "100%"}}>
+            <div className="card h-75" style={{borderRadius: "15px", margin: "auto", marginTop: "1.8rem",  width: "91%"}}>
+            <div className="card-body">
+                <div className="summary">
+                    <h5 className="card-title">TP0{props.kth + 1}</h5>
+                    <div>{tripSummary}</div>
+                </div>
+                <div className="steps" style={{marginTop: "5px"}}>
+                    <div className='scroll' style={{height: "230px", overflow: "auto"}}>
+                        <table style={{ backgroundColor:"rgba(245,240,246,1)", textAlign: "left"}}>
+                          <tbody>
+                            {steps}
+                          </tbody>
+                        </table>
+                        {/* <table>
+                          <tbody>
+                            {interStops}
+                          </tbody> 
+                        </table>    */}
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+        {/* <MoreVertIcon/> */}
+        
+    </>
+  )
+}
+
+######################################################################
+#itineraries component
+
+// import React, {useContext} from 'react'
+import React from 'react';
+import Itinerary from './Itinerary'
+// import Resp from './Resp'
+// import Resp1 from './Resp1';
+
+import "./css/slide.css"
+// import SampleNextArrow from './SampleNextArrow';
+// import SamplePrevArrow from './SamplePrevArrow';
+
+const Itineraries = (props) => {  
+  // console.log(props.plan);
+  
+    let rows = [];
+    if(!props){
+      // rows.push(<div key={0}><h1>No Props Passed Available</h1></div>);
+      console.log("no props")
+    }
+    else if(!props.plan){  
+      // rows.push(<div key={0}>No plan</div>);
+      console.log("no plan")
+    } 
+    else if(!props.plan.itineraries.length){
+      rows.push(<div key={0}><h1>No Itineraries Available</h1></div>)
+      console.log("no itineraries")
+    }
+    else{
+        for (let i=0; i<props.plan.itineraries.length; i++){
+          rows.push(<div key={i} style={{borderRadius: '25px'}} > <Itinerary kth={i} itinerary={props.plan.itineraries[i]}/></div>)
+          // <div style={{backgroundColor: "white", width: "2px", margin: "2px"}}></div>
+          // console.log(props.plan.itineraries[i]);
+        }
+    }
+  
+  const settings = {
+    dots: true,
+    infinite: true,
+    speed: 500,
+    slidesToShow: 1,
+    slidesToScroll: 1,
+    className: "inner-slider-div",
+    // autoplaySpeed: 3000,
+    // autoplay: true,
+    initialSlide: 0, 
+    // arrows:true,
+    // nextArrow: <SampleNextArrow/>,
+    // prevArrow: <SamplePrevArrow/>
+    // adaptiveHeight: true
+    // rtl: true
+  };
+  return (
+    <>
+    <div style={{height: "400px", width: "40%", margin: "auto", borderRadius: '25px'} }> 
+      {
+        props.plan?<Slider {...settings} >{rows}</Slider>:<div></div>
+      }
+    </div>
+    </>
+  )
+}
+
+export default Itineraries;
+
+#################################################################
+  let uniq = 1;
+  let steps = [];
+  // let interStops = [];
+  for(let i = 0; i < itinerary.legs.length; i++ ){
+    steps.push(<tr key={uniq}><th><h5>{itinerary.legs[i].mode} Leg</h5></th><td>{(itinerary.legs[i].distance*0.00062137).toFixed(2)} miles, {(itinerary.legs[i].duration/60).toFixed(2)} min to {itinerary.legs[i].to.name}</td></tr>);
+    uniq += 1;
+
+    if(itinerary.legs[i].mode === "BUS"){
+      if(itinerary.legs[i].intermediateStops.length !== 0){
+        steps.push(<tr key={uniq}><th>Intermediate Stops:</th></tr>);
+        uniq += 1;
+
+        for(let j = 0; j < itinerary.legs[i].intermediateStops.length; j++ ){
+          let arrivalTime = itinerary.legs[i].intermediateStops[j].arrival ;
+          let stopName = itinerary.legs[i].intermediateStops[j].name ;
+          steps.push(<tr key={uniq}><td>{(new Date(arrivalTime)).toString()}-</td><td>{stopName} </td></tr>);
+          uniq += 1;
+        } 
+      }
+    }
+
+    for(let j = 0; j < itinerary.legs[i].steps.length; j++ ){
+        let direction = itinerary.legs[i].steps[j].relativeDirection ;
+        let streetName = itinerary.legs[i].steps[j].streetName ;
+        let stepDistance = itinerary.legs[i].steps[j].distance*0.00062137;
+        steps.push(<tr key={uniq}><td>{direction} on to {streetName}</td><td>{stepDistance.toFixed(2)} miles</td></tr>);
+        uniq += 1;
+    } 
+
+
+  }
+
+  let tripSummary = []; tripSummary.push(<div key={0}><h4>Trip Summary</h4></div>);
+  tripSummary.push(<div key={1}> Travel: {(new Date(itinerary.startTime)).toString()} </div>);
+  tripSummary.push(<div key={2}>Time: {(itinerary.duration/60).toFixed(2)}</div>);
+  tripSummary.push(<div key={3}>Total Walk: {(itinerary.walkDistance*0.00062137).toFixed(2)}</div>);
+
+  if(itinerary.hasOwnProperty("fare")){
+    if("fare" in itinerary.fare){
+      if("regular" in itinerary.fare.fare){
+        tripSummary.push(<div key={4}>Fare: {itinerary.fare.fare.regular.currency.symbol} {itinerary.fare.fare.regular.cents/100}</div>);
+      }
+    }
+  }
+
+
+
+######################################################################################
+  // let itinerary = props.itinerary;
+  // let duration = itinerary.duration/60;
+  // let distance = itinerary.walkDistance*0.00062137;
+  
+  // let itinerary = Resp.plan.itineraries;
+  // let uniq = 1;
+  // let steps = [];
+  // for( let k = 0; k < itinerary.length; k++){
+  //   for(let i = 0; i < itinerary[k].legs.length; i++ ){
+
+  //     steps.push(<tr key={uniq}><th>{itinerary[k].legs[i].mode} Leg</th><td>{(itinerary[k].legs[i].duration/60).toFixed(2)} min</td></tr>);
+  //     uniq += 1;
+      
+  //     for(let j = 0; j < itinerary[k].legs[i].steps.length; j++ ){
+  //         let direction = itinerary[k].legs[i].steps[j].relativeDirection ;
+  //         let streetName = itinerary[k].legs[i].steps[j].streetName ;
+  //         let stepDistance = itinerary[k].legs[i].steps[j].distance*0.00062137;
+  //         steps.push(<tr key={uniq}><td>{direction} on to {streetName}</td><td>{stepDistance.toFixed(2)} miles</td></tr>);
+  //         uniq += 1;
+  //     }   
+  //   }
+  // }
+
+##################################################
+async componentDidMount(){
+
+        let transportMode = "WALK";
+        let src = "28.66514,77.21097";
+        let des = "28.66001,77.20385";
+        let tripDate = "02-23-2022";
+
+        let url = `http://localhost:8080/otp/routers/default/plan?mode=${transportMode}&fromPlace=${src}&toPlace=${des}&date=${tripDate}&numItineraries=3`; 
+        let data = await fetch(url);
+        let parsedData = await data.json();
+
+        console.log(parsedData);
+        // this.setState({itineraries : parsedData.plan.itineraries});
+
+    }
+
+##########################################
+
+// let start = "28.66514,77.21097"
+// let end = "28.66001,77.20385";
+// let time = "";
+// let date = "";
+// let mode = "WALK";
+
+  // const data = "";
+  
+  // let clicked = 0;
+
+  // const [showw, setShoww] = useState(0);
+  // const [inp, setInp] = useState({
+  //   start: "",
+  //   end: "",
+  //   time: "", 
+  //   date: "",
+  //   mode: ""
+  // })
+  // const [clicked, setClicked] = useState(0);
+  // const initialRender = useRef(true);
+  // const datee = useRef(null);
+
+  // let planJson = {};
+  // const fetchData = useCallback(
+  //   async () => {
+  //       let url = `http://localhost:8080/otp/routers/default/plan?mode=${inp.mode}&fromPlace=${inp.start}&toPlace=${inp.end}&date=${inp.date}&time=${inp.time}&numItineraries=3`; 
+  //       console.log(url);
+  //       console.log("waiting..")
+  //       let data = await fetch(url);
+  //       let parsedData = await data.json();
+    
+  //       // planJson = parsedData.plan;
+  //       setPlanJson(parsedData.plan);
+  //       console.log(planJson);
+  //       // setClicked(0)
+
+  //   },
+  //   [inp, planJson]
+  // )
+
+  // useEffect(() => {
+  //   console.log("useEffect")
+  //   // console.log(initialRender.current)
+  //   if(initialRender.current){
+  //     initialRender.current = false;
+  //     // setClicked(0)
+  //     console.log("if")
+  //   }
+  //   else {
+
+  //     // console.log('first')
+      
+  //     if(!(clicked === 1)){  // onclick event
+  //       console.log('first')
+  //       // console.log(time);
+  //       // setTimeout(() => {
+  //       //   fetchData();
+  //       // }, 3000);
+  //       fetchData();
+  //       // console.log(start);
+        
+  //     }
+  //     setClicked(0)
+  //   }
+   
+  // }, [clicked, fetchData])
+
+
+
+
+#########################################################
+<div className="accordion-item">
+    <h2 className="accordion-header" id={heading}>
+    <button className="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target={`#${collapseHeading}`} aria-expanded="true" aria-controls={collapseHeading}>
+        Itinerary {kth} {`=>`} Duration: {duration.toFixed(2)} min and Distance: {distance.toFixed(2)} mi
+    </button>
+    </h2>
+
+    <div id={collapseHeading} className="accordion-collapse collapse show" aria-labelledby={heading} data-bs-parent="#accordionExample">
+    <div className="accordion-body">
+    {/* <div id="steps"></div> */}
+    <table>
+        <tbody>
+        { steps }
+        </tbody>
+    </table>
+        {/* <strong>This is the first item's Itinerary body.</strong> It is shown by default, until the collapse plugin adds the appropriate classes that we use to style each element. These classes control the overall appearance, as well as the showing and hiding via CSS transitions. You can modify any of this with custom CSS or overriding our default variables. It's also worth noting that just about any HTML can go within the <code>.accordion-body</code>, though the transition does limit overflow. */}
+    </div>
+    </div>
+          
+</div>
+
+
+###############\r
+react-b carousel
+<Carousel>
+            <Carousel.Item>
+                {/* <img
+                className="d-block w-100"
+                src="holder.js/800x400?text=First slide&bg=373940"
+                alt="First slide"
+                /> */}
+                <Carousel.Caption>
+                <h3>First slide label</h3>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+                </Carousel.Caption>
+            </Carousel.Item>
+        </Carousel>
