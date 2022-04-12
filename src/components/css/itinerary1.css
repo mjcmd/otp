@@ -6,11 +6,12 @@
 div.carousel {
 
     width: 100%;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     margin-top: 0px;
     padding-top: 0px;
-    display: flex;
-    justify-content: center;   
+
+    /* display: flex;
+    justify-content: center;    */
 
     /* border: 6px solid red; */
     
@@ -20,10 +21,11 @@ div.carousel {
 div.thumbs-wrapper.axis-vertical{
     
 
-    display: flex;
-    justify-content: center;
-    width: 80%;
+    /* display: flex;
+    justify-content: center; */
+    width: 97%;
     padding-top: 21px;
+    /* padding-left: -100px; */
     overflow: auto;
 
     /* border: 6px solid rgb(0, 255, 81); */
@@ -48,14 +50,16 @@ button.control-arrow.control-prev {
 }
 
 ul.thumbs.animated {
-    /* margin-left: 50px; */
-    margin-right: 500px;
+    margin-left: -15px;
+    margin-right: 300px;
     margin-bottom: 5px;
     margin-top: 5px;
-    width: 80%;
+    /* width: 80%; */
+
     /* width: 730px; */
-    padding-left: 130px;
-    padding-right: 90px;
+    /* padding-left: 130px; */
+    /* padding-left: 0px; */
+    /* padding-right: 90px; */
     /* overflow: auto; */
 
     /* border: 6px solid rgb(132, 0, 255); */
@@ -79,7 +83,8 @@ ul.thumbs.animated {
 .carousel-root {
     /* height: 200px; */
     position: fixed;
-    left: "10px";
+    top: 25%;
+    left: "100px";
 
     /* 60% before */
     width: 20%;  

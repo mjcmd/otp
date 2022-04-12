@@ -4,6 +4,7 @@ import Navbar from './Navbar';
 import InputForm from './InputForm';
 import './css/mapp.css'
 import DirectionsWalkIcon from '@mui/icons-material/DirectionsWalk';
+import Spinner from './Spinner';
 
 var polyline = require('@mapbox/polyline');
 
@@ -31,13 +32,15 @@ export default function Mapp() {
         if(map === undefined){
             console.log("should exist once only...")
             L = window.L;
-            map = L.map('map', {closePopupOnClick: false}).setView([28.7041, 77.1025], 11);
+            map = L.map('map', {closePopupOnClick: false, zoomControl: false}).setView([32.523659, -93.763504], 11);   // for delhi [28.7041, 77.1025]
 
             const tileUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             const attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors';
 
             const tiles = L.tileLayer(tileUrl, {attribution});
             tiles.addTo(map);
+
+            // const zoom = L.control.zoom({zoomInText: `+`, zoomInTitle: "Zoom In", zoomOutText: "-", zoomOutTitle: "Zoom Out", position: "topright"}).addTo(map);
         }
 
         // if(thumbnailClick === -2){
@@ -83,31 +86,63 @@ export default function Mapp() {
             for (let i=0; i < itinerary.legs.length && itinerary.legs.length !== 0; i++){
 
 
-                console.log(itinerary.legs[i].legGeometry.points);
-                console.log("decoded...");
-                console.log(polyline.decode(itinerary.legs[i].legGeometry.points));
-
-                // var legLatlngs = polyline.decode(itinerary.legs[i].legGeometry.points);
-
-
-                // var legPolyline = L.polyline(legLatlngs, {color: 'rgba(0,255,0,1)', weight: '8'}); //.addTo(map);
-                // multiSegments.push(legPolyline);
+                
                
-                if(itinerary.legs[i].mode === "WALK"){
-                    console.log("walk leg");
+                if(itinerary.legs[i].mode === "WALK" || itinerary.legs[i].mode === "CAR" || itinerary.legs[i].mode === "BICYCLE" ){
+                    
 
                     // var walkLatLngs = [];
+                    if(itinerary.legs[i].mode === "WALK"){
+                      console.log("walk leg");
+                      console.log(itinerary.legs[i].legGeometry.points);
+                      console.log("decoded...");
+                      console.log(polyline.decode(itinerary.legs[i].legGeometry.points));
 
-                    var walkLatLngs = polyline.decode(itinerary.legs[i].legGeometry.points);
-                    var walkPolyline = L.polyline(walkLatLngs, {color: 'rgba(113,110,119,1)', weight: '8'}).bringToBack(); //.addTo(map); //rgba(128, 127, 127, .6)
-                    walkPolyline.bindTooltip( `<div> <i  class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_walk</i>  WALK to ${itinerary.legs[i].to.name} (${(itinerary.legs[i].distance*0.00062137).toFixed(2)}miles)</div>`, {className: 'toolTipClass'} ).on('mouseover', function (e) {
-                        this.openTooltip();
-                      }).on('mousemove', function (e) {
-                        this.openTooltip(e.latlng);
-                      }).on('mouseout', function (e) {
-                        this.closeTooltip();
-                      });
-                    multiSegments.push(walkPolyline);
+                      var walkLatLngs = polyline.decode(itinerary.legs[i].legGeometry.points);
+                      var walkPolyline = L.polyline(walkLatLngs, {color: 'rgba(113,110,119,1)', weight: '8'}).bringToBack(); //.addTo(map); //rgba(128, 127, 127, .6)
+                      walkPolyline.bindTooltip( `<div> <i  class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_walk</i>  WALK to ${itinerary.legs[i].to.name} (${(itinerary.legs[i].distance*0.00062137).toFixed(2)}miles)</div>`, {className: 'toolTipClass'} ).on('mouseover', function (e) {
+                          this.openTooltip();
+                        }).on('mousemove', function (e) {
+                          this.openTooltip(e.latlng);
+                        }).on('mouseout', function (e) {
+                          this.closeTooltip();
+                        });
+                      multiSegments.push(walkPolyline);
+                    }else if(itinerary.legs[i].mode === "CAR"){
+                      console.log("car leg");
+                      console.log(itinerary.legs[i].legGeometry.points);
+                      console.log("decoded...");
+                      console.log(polyline.decode(itinerary.legs[i].legGeometry.points));
+                      
+                      var carLatLngs = polyline.decode(itinerary.legs[i].legGeometry.points);
+                      var carPolyline = L.polyline(carLatLngs, {color: 'rgba(113,110,119,1)', weight: '8'}).bringToBack(); //.addTo(map); //rgba(128, 127, 127, .6)
+                      carPolyline.bindTooltip( `<div> <i  class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_car</i>  CAR to ${itinerary.legs[i].to.name} (${(itinerary.legs[i].distance*0.00062137).toFixed(2)}miles)</div>`, {className: 'toolTipClass'} ).on('mouseover', function (e) {
+                          this.openTooltip();
+                        }).on('mousemove', function (e) {
+                          this.openTooltip(e.latlng);
+                        }).on('mouseout', function (e) {
+                          this.closeTooltip();
+                        });
+                      multiSegments.push(carPolyline);
+                    }else {
+                      console.log("bicycle leg");
+                      console.log(itinerary.legs[i].legGeometry.points);
+                      console.log("decoded...");
+                      console.log(polyline.decode(itinerary.legs[i].legGeometry.points));
+                      
+                      var bicycleLatLngs = polyline.decode(itinerary.legs[i].legGeometry.points);
+                      var bicyclePolyline = L.polyline(bicycleLatLngs, {color: 'rgba(113,110,119,1)', weight: '8'}).bringToBack(); //.addTo(map); //rgba(128, 127, 127, .6)
+                      bicyclePolyline.bindTooltip( `<div> <i  class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_bike</i>  BICYCLE to ${itinerary.legs[i].to.name} (${(itinerary.legs[i].distance*0.00062137).toFixed(2)}miles)</div>`, {className: 'toolTipClass'} ).on('mouseover', function (e) {
+                          this.openTooltip();
+                        }).on('mousemove', function (e) {
+                          this.openTooltip(e.latlng);
+                        }).on('mouseout', function (e) {
+                          this.closeTooltip();
+                        });
+                      multiSegments.push(bicyclePolyline);
+                    }
+
+                    
 
                     // var from = [];
                     // from.push(itinerary.legs[i].from.lat);
@@ -203,9 +238,11 @@ export default function Mapp() {
                 }
                 
                 if(itinerary.legs[i].mode === "BUS"){
-                    console.log("bus leg")
+                    console.log("bus leg");
+                    console.log(itinerary.legs[i].legGeometry.points);
+                    console.log("decoded...");
+                    console.log(polyline.decode(itinerary.legs[i].legGeometry.points));
 
-                //     var busLatLngs = [];
                     var busLatLngs = polyline.decode(itinerary.legs[i].legGeometry.points);
                     var busPolyline = L.polyline(busLatLngs, {color: 'rgba(0,160,62,1)', weight: '8'}).bringToBack(); //.addTo(map);  rgba(0,255,0,.6)
                     busPolyline.bindTooltip( `<div> <i class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_bus</i> BUS[${itinerary.legs[i].route}] to ${itinerary.legs[i].to.name} (${(itinerary.legs[i].distance*0.00062137).toFixed(2)}miles) </div>`, {className: 'toolTipClass'} )
@@ -246,15 +283,52 @@ export default function Mapp() {
                 
                 if(itinerary.legs[i].mode === "BUS"){
 
-                  var fromCircle = L.circleMarker([itinerary.legs[i].from.lat, itinerary.legs[i].from.lon], {radius: 5.5, color: 'black', fillColor: 'red', weight: '2', fillOpacity: '1'});
-                  fromCircle.bindTooltip( `<div> <i class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_bus</i> BUS[${itinerary.legs[i].route}], ${itinerary.legs[i].from.name} </div>`, {className: 'startStopStickyToolTipClass', autoClose: false, autoPan: false, permanent: true , offset: [90, 0], direction: 'auto'} )
-                      .on('add', function (e) {
-                          e.target.openTooltip();
-                        })
-                      .on('click', function (e) {
-                          e.target.toggleTooltip();
-                        });
-                  multiSegments.push(fromCircle);
+                  if(i-1 >= 0 && itinerary.legs[i-1].mode === "WALK"){
+                    var fromCircle = L.circleMarker([itinerary.legs[i].from.lat, itinerary.legs[i].from.lon], {radius: 5.5, color: 'black', fillColor: 'red', weight: '2', fillOpacity: '1'});
+                    fromCircle.bindTooltip( `<div> <i class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_bus</i> BUS[${itinerary.legs[i].route}], ${itinerary.legs[i].from.name} </div>`, {className: 'startStopStickyToolTipClass', autoClose: false, autoPan: false, permanent: true , offset: [90, 0], direction: 'auto'} )
+                        .on('add', function (e) {
+                            e.target.openTooltip();
+                          })
+                        .on('click', function (e) {
+                            e.target.toggleTooltip();
+                          });
+                    multiSegments.push(fromCircle);
+                  }
+                  
+                  if(itinerary.legs != null && i+1 < itinerary.legs.length && itinerary.legs[i+1].mode === "WALK"){
+                    var toCircle = L.circleMarker([itinerary.legs[i].to.lat, itinerary.legs[i].to.lon], {radius: 5.5, color: 'black', fillColor: 'red', weight: '2', fillOpacity: '1'}).bringToFront();
+                    toCircle.bindTooltip( `<div>${itinerary.legs[i].to.name} </div>`, {className: 'endStopStickyToolTipClass', autoClose: false, autoPan: false , permanent: true, offset: [40, 0], direction: "auto"} )
+                    .on('add', function (e) {
+                      e.target.openTooltip();
+                    })
+                    .on('click', function (e) {
+                      e.target.toggleTooltip();
+                    });
+                    multiSegments.push(toCircle);
+                  }
+
+                  if(itinerary.legs != null && i+1 < itinerary.legs.length && itinerary.legs[i+1].mode === "BUS"){
+                    var toCircle = L.circleMarker([itinerary.legs[i].to.lat, itinerary.legs[i].to.lon], {radius: 5.5, color: 'black', fillColor: 'red', weight: '2', fillOpacity: '1'}).bringToFront();
+                    toCircle.bindTooltip( `<div> <i class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_bus</i> BUS[${itinerary.legs[i+1].route}], ${itinerary.legs[i+1].from.name} </div>`, {className: 'startStopStickyToolTipClass', autoClose: false, autoPan: false, permanent: true , offset: [90, 0], direction: 'auto'} )
+                    .on('add', function (e) {
+                      e.target.openTooltip();
+                    })
+                    .on('click', function (e) {
+                      e.target.toggleTooltip();
+                    });
+                    multiSegments.push(toCircle);
+                  }
+
+                  // var fromCircle = L.circleMarker([itinerary.legs[i].from.lat, itinerary.legs[i].from.lon], {radius: 5.5, color: 'black', fillColor: 'red', weight: '2', fillOpacity: '1'});
+                  // fromCircle.bindTooltip( `<div> <i class="material-icons" style="font-size:26px; vertical-align:middle;"> directions_bus</i> BUS[${itinerary.legs[i].route}], ${itinerary.legs[i].from.name} </div>`, {className: 'startStopStickyToolTipClass', autoClose: false, autoPan: false, permanent: true , offset: [90, 0], direction: 'auto'} )
+                  //     .on('add', function (e) {
+                  //         e.target.openTooltip();
+                  //       })
+                  //     .on('click', function (e) {
+                  //         e.target.toggleTooltip();
+                  //       });
+                  // multiSegments.push(fromCircle);
+
 
                     // var toCircle = L.circleMarker([itinerary.legs[i].to.lat, itinerary.legs[i].to.lon], {radius: 5.5, color: 'black', fillColor: 'red', weight: '2', fillOpacity: '1'}).bringToFront();
                     // toCircle.bindPopup( `<div>${itinerary.legs[i].to.name} </div>`, {autoClose: false, autoPan: false} )
@@ -266,23 +340,23 @@ export default function Mapp() {
                 }
             }
 
-            for (let i=0; i < itinerary.legs.length && itinerary.legs.length !== 0; i++){
+            // for (let i=0; i < itinerary.legs.length && itinerary.legs.length !== 0; i++){
                 
-              if(itinerary.legs[i].mode === "BUS"){
+            //   if(itinerary.legs[i].mode === "BUS"){
 
-                  var toCircle = L.circleMarker([itinerary.legs[i].to.lat, itinerary.legs[i].to.lon], {radius: 5.5, color: 'black', fillColor: 'red', weight: '2', fillOpacity: '1'}).bringToFront();
-                  toCircle.bindTooltip( `<div>${itinerary.legs[i].to.name} </div>`, {className: 'endStopStickyToolTipClass', autoClose: false, autoPan: false , permanent: true, offset: [40, 0], direction: "auto"} )
-                  .on('add', function (e) {
-                    e.target.openTooltip();
-                  })
-                  .on('click', function (e) {
-                    e.target.toggleTooltip();
-                  });
-                  multiSegments.push(toCircle);
+            //       var toCircle = L.circleMarker([itinerary.legs[i].to.lat, itinerary.legs[i].to.lon], {radius: 5.5, color: 'black', fillColor: 'red', weight: '2', fillOpacity: '1'}).bringToFront();
+            //       toCircle.bindTooltip( `<div>${itinerary.legs[i].to.name} </div>`, {className: 'endStopStickyToolTipClass', autoClose: false, autoPan: false , permanent: true, offset: [40, 0], direction: "auto"} )
+            //       .on('add', function (e) {
+            //         e.target.openTooltip();
+            //       })
+            //       .on('click', function (e) {
+            //         e.target.toggleTooltip();
+            //       });
+            //       multiSegments.push(toCircle);
 
-                //  multiSegments.push(stops);
-              }
-          }
+            //     //  multiSegments.push(stops);
+            //   }
+            // }
 
 
 
@@ -404,10 +478,10 @@ export default function Mapp() {
 
 
         <div>
-            <Navbar/>
+            
             <div id="map"> </div>
             {/* <InputForm style={{position: "absolute", bottom: "50%", zIndex: "1000"}}/> */}
-            <div style={{position: "absolute", top: "40px", left: "0px", right: "0px", zIndex: "400"}} > <InputForm itinerariesData={itinerariesData}/> </div>
+            <div style={{position: "fixed", top: "0px", left: "0px", right: "0px", zIndex: "400", height: "17%"}} > <Navbar/> <InputForm itinerariesData={itinerariesData} map={map} L={L}/>  </div>
             {/* style={{position: "absolute", top: "20px",  left: "20%", zIndex: "400"}} */}
         </div>
         

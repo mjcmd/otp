@@ -72,7 +72,7 @@ export default function Itinerary1(props) {
     let steps = [];
     // let interStops = [];
     for(let i = 0; itinerary.legs != null && i < itinerary.legs.length; i++ ){
-      let ithLegDuration = (parseInt((new Date(itinerary.legs[i].endTime)).toString().slice(16, 18)) - parseInt((new Date(itinerary.legs[i].startTime)).toString().slice(16, 18)))*60 + (parseInt((new Date(itinerary.legs[i].endTime)).toString().slice(19, 21)) - parseInt((new Date(itinerary.legs[i].startTime)).toString().slice(19, 21)))
+      let ithLegDuration = ((parseInt((new Date(itinerary.legs[i].endTime)).toString().slice(16, 18)) - parseInt((new Date(itinerary.legs[i].startTime)).toString().slice(16, 18)) + 24)%24)*60 + (parseInt((new Date(itinerary.legs[i].endTime)).toString().slice(19, 21)) - parseInt((new Date(itinerary.legs[i].startTime)).toString().slice(19, 21)))
       
       
                                                                                                                                                                                                                               // {  (itinerary.duration/60).toFixed(0) <= 59?  ` ${itineraryDurationMin}mins` : `${Math.floor(ithLegDuration/60).toString().slice(".")[0]}hrs ${Math.floor(ithLegDuration%60).toString()}min`  } 
@@ -81,9 +81,18 @@ export default function Itinerary1(props) {
       uniq += 1;
       // <tr style={{borderBottom: "3px solid blue"}}><td><b>Walk</b> 34.5min</td><td></td><td></td></tr>
       
-      if(itinerary.legs[i].mode === "WALK"){
+      if(itinerary.legs[i].mode === "WALK" || itinerary.legs[i].mode === "CAR" || itinerary.legs[i].mode === "BICYCLE" ){
         // if(i === itinerary.legs.length - 1){
-          steps.push(<tr key={uniq} ><td colSpan={3} style={{paddingTop: "8px", width: "180px", backgroundColor: "#bbded6"}}><div style={{fontSize: "11px"}}> <div style={{marginBottom: "3px"}}>{ <DirectionsWalkIcon sx={{fontSize: 20}}/> } {<ArrowRightAltIcon sx={{fontSize: 20}}/>} {itinerary.legs[i].to.name}</div> <div style={{fontWeight: "600"}} ><AccessTimeIcon sx={{fontSize: "18px", paddingBottom: "3px"}}/> {(new Date(itinerary.legs[i].startTime)).toString().slice(16, 21)}  - {(new Date(itinerary.legs[i].endTime)).toString().slice(16, 21)}</div> </div></td></tr>);
+
+          if(itinerary.legs[i].mode === "WALK"){
+            steps.push(<tr key={uniq} ><td colSpan={3} style={{paddingTop: "8px", width: "180px", backgroundColor: "#bbded6"}}><div style={{fontSize: "11px"}}> <div style={{marginBottom: "3px"}}>{ <DirectionsWalkIcon sx={{fontSize: 20}}/> }  {<ArrowRightAltIcon sx={{fontSize: 20}}/>} {itinerary.legs[i].to.name}</div> <div style={{fontWeight: "600"}} ><AccessTimeIcon sx={{fontSize: "18px", paddingBottom: "3px"}}/> {(new Date(itinerary.legs[i].startTime)).toString().slice(16, 21)}  - {(new Date(itinerary.legs[i].endTime)).toString().slice(16, 21)}</div> </div></td></tr>);
+          }
+          else if(itinerary.legs[i].mode === "CAR") {
+            steps.push(<tr key={uniq} ><td colSpan={3} style={{paddingTop: "8px", width: "180px", backgroundColor: "#bbded6"}}><div style={{fontSize: "11px"}}> <div style={{marginBottom: "3px"}}>{ <DirectionsCarIcon sx={{fontSize: 20}}/> } {<ArrowRightAltIcon sx={{fontSize: 20}}/>} {itinerary.legs[i].to.name}</div> <div style={{fontWeight: "600"}} ><AccessTimeIcon sx={{fontSize: "18px", paddingBottom: "3px"}}/> {(new Date(itinerary.legs[i].startTime)).toString().slice(16, 21)}  - {(new Date(itinerary.legs[i].endTime)).toString().slice(16, 21)}</div> </div></td></tr>);
+          }
+          else{
+            steps.push(<tr key={uniq} ><td colSpan={3} style={{paddingTop: "8px", width: "180px", backgroundColor: "#bbded6"}}><div style={{fontSize: "11px"}}> <div style={{marginBottom: "3px"}}>{ <DirectionsBikeIcon sx={{fontSize: 20}}/> } {<ArrowRightAltIcon sx={{fontSize: 20}}/>} {itinerary.legs[i].to.name}</div> <div style={{fontWeight: "600"}} ><AccessTimeIcon sx={{fontSize: "18px", paddingBottom: "3px"}}/> {(new Date(itinerary.legs[i].startTime)).toString().slice(16, 21)}  - {(new Date(itinerary.legs[i].endTime)).toString().slice(16, 21)}</div> </div></td></tr>);
+          }
         // }
         // else{
           // steps.push(<tr key={uniq} ><td colSpan={3} style={{paddingTop: "8px", width: "180px", backgroundColor: "#bbded6"}}><div style={{fontSize: "11px"}}>{<DirectionsWalkIcon sx={{fontSize: 20}}/>}{<ArrowRightAltIcon sx={{fontSize: 20}}/>} {itinerary.legs[i].to.name} <br/> Time: {(new Date(itinerary.legs[i].startTime)).toString().slice(16, 21)}  - {(new Date(itinerary.legs[i].endTime)).toString().slice(16, 21)} &nbsp; {(itinerary.legs[i].duration/60).toFixed(0)}min</div></td></tr>);
@@ -102,26 +111,85 @@ export default function Itinerary1(props) {
             // let midDotIcon = (<div style={{width: "10px", paddingLeft: "0px"}}><MoreVertIcon sx={{fontSize: "14px"}}/> <br/><MoreVertIcon sx={{fontSize: "14px", marginTop: "-3px"}}/> <br/> <div style={{borderRadius: "50%", height: "14px", width: "14px", backgroundColor: `${colors[(j)%10]}`, margin: "auto", marginBottom: "0px", paddingBottom: "0px", border: "2px solid rgb(102, 102, 102)"}}></div>  <br/> <MoreVertIcon sx={{fontSize: "14px", marginTop: "-3px"}}/> <br/><MoreVertIcon sx={{fontSize: "14px", marginTop: "-3px"}}/></div>);
             // let endDotIcon = (<div style={{width: "10px", paddingLeft: "0px"}}><MoreVertIcon sx={{fontSize: "14px"}}/> <br/><MoreVertIcon sx={{fontSize: "14px", marginTop: "-3px"}}/> <br/> <div style={{borderRadius: "50%", height: "14px", width: "14px", backgroundColor: `rgba(${j%3}2, ${j%3}64, 2${j%10}3, 1)`, margin: "auto", marginBottom: "0px", paddingBottom: "0px", border: "2px solid rgb(102, 102, 102)"}}></div> </div>);
 
-            if(direction === "DEPART"){
-              steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Start on {bogusName?"path":streetName} heading {absoluteDir}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+
+
+            switch(direction){
+              case "DEPART": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<StraightIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Start on {bogusName?"path":streetName} heading {absoluteDir}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              break;
+
+              case "HARD_LEFT": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td> {<img src={require('./images/turnSharpLeft.png')} alt="turnSharpLeft" width="30" height="30" />} </td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>HRD LEFT on to {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div> <img src=${require('./images/turnSharpLeft.png')} alt="turnSharpLeft" width="30" height="30" /> HARD LEFT on to ${bogusName?"path":streetName} (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "HARD_RIGHT": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td> <img src={require('./images/turnSharpRight.png')} alt="turnSharpRight" width="30" height="30" /> </td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>HARD RIGHT on to {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div> <img src=${require('./images/turnSharpRight.png')} alt="turnSharpRight" width="30" height="30" /> HARD RIGHT on to ${bogusName?"path":streetName}   (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "LEFT": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<TurnLeftIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Left on to {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> turn_left </i> LEFT on to ${bogusName?"path":streetName}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "RIGHT": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<TurnRightIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Right on to {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> turn_right </i> RIGHT on to ${bogusName?"path":streetName}   (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "SLIGHTLY_LEFT": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<TurnSlightLeftIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>SLIGHTLY LEFT on to {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> turn_slight_left </i> SLIGHTLY LEFT on to ${bogusName?"path":streetName}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "SLIGHTLY_RIGHT": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<TurnSlightRightIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>SLIGHTLY RIGHT on to {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> turn_slight_right </i> SLIGHTLY RIGHT on to ${bogusName?"path":streetName} (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "CONTINUE": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<StraightIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Continue on to {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div style=""> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> straight </i> Continue on to ${bogusName?"path":streetName}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "CIRCLE_CLOCKWISE": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<RoundaboutRightIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}> Take roundabout clockwise to {itinerary.legs[i].steps[j].exit} exit on {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> roundabout_right </i> Take roundabout clockwise to ${itinerary.legs[i].steps[j].exit} exit on ${bogusName?"path":streetName}}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "CIRCLE_COUNTERCLOCKWISE": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}> <td>{<RoundaboutLeftIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}> Take roundabout counterclockwise to {itinerary.legs[i].steps[j].exit} exit on {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> roundabout_left </i> Take roundabout counterclockwise to ${itinerary.legs[i].steps[j].exit} exit on ${bogusName?"path":streetName}}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "UTURN_LEFT": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<UTurnLeftIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}> U-TURN LEFT to continue on {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>); 
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> u_turn_left </i> U-TURN LEFT to continue on ${bogusName?"path":streetName}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              case "UTURN_RIGHT": steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{<UTurnRightIcon/>}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}> U-TURN RIGHT to continue on {bogusName?"path":streetName} </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>); 
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> u_turn_right </i> U-TURN RIGHT to continue on ${bogusName?"path":streetName}  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              break;
+
+              default: steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td><ElevatorIcon/></td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>  Use Elevator </td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>); 
+              // stepCircle.bindPopup( `<div> <i class="material-icons" style="font-size:22px; vertical-align:middle;"> elevator </i> Use Elevator  (${(itinerary.legs[i].steps[j].distance*0.00062137).toFixed(2)}miles)</div>` )
+              
             }
-            else if(direction === "UTURN_LEFT" || direction === "UTURN_RIGHT"){
-              steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>{direction} to continue on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
-            }
-            else if(direction === "CIRCLE_CLOCKWISE" || direction === "CIRCLE_COUNTERCLOCKWISE"){
-              if(direction === "CIRCLE_CLOCKWISE"){
-                steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Take roundabout clockwise to {itinerary.legs[i].steps[j].exit} exit on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
-              }
-              else{
-                steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Take roundabout counterclockwise to {itinerary.legs[i].steps[j].exit} exit on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
-              }
-            }
-            else if(direction === "ELEVATOR"){
-              steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Use Elevator</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
-            }
-            else{
-              steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>{direction} on to {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
-            }
+
+
+
+            // if(direction === "DEPART"){
+              // steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Start on {bogusName?"path":streetName} heading {absoluteDir}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+            // }
+            // else if(direction === "UTURN_LEFT" || direction === "UTURN_RIGHT"){
+            //   steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>{direction} to continue on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+            // }
+            // else if(direction === "CIRCLE_CLOCKWISE" || direction === "CIRCLE_COUNTERCLOCKWISE"){
+            //   if(direction === "CIRCLE_CLOCKWISE"){
+            //     steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Take roundabout clockwise to {itinerary.legs[i].steps[j].exit} exit on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+            //   }
+            //   else{
+            //     steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Take roundabout counterclockwise to {itinerary.legs[i].steps[j].exit} exit on {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+            //   }
+            // }
+            // else if(direction === "ELEVATOR"){
+            //   steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6", lineHeight: "1.3"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>Use Elevator</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+            // }
+            // else{
+            //   steps.push(<tr key={uniq} style={{backgroundColor: "#bbded6"}}><td>{indicator(direction)}</td><td width={"250px"} style={{ fontSize:"11px", padding: "5px" }}>{direction} on to {bogusName?"path":streetName}</td><td style={{paddingLeft: "2px", paddingRight: "5px"}}>{stepDistance.toFixed(2)} miles</td></tr>);
+            // }
+
+
             uniq += 1;
 
             // if(j === 0){
@@ -240,7 +308,12 @@ export default function Itinerary1(props) {
         // };
     }
     let tripSummary = []; 
-    let itineraryDurationMin = (parseInt((new Date(itinerary.endTime)).toString().slice(16, 18)) - parseInt((new Date(itinerary.startTime)).toString().slice(16, 18)))*60 + (parseInt((new Date(itinerary.endTime)).toString().slice(19, 21)) - parseInt((new Date(itinerary.startTime)).toString().slice(19, 21))); 
+    let itineraryDistanceMtrs = 0;
+    for(let i = 0; itinerary.legs != null && i < itinerary.legs.length; i++){
+      itineraryDistanceMtrs += itinerary.legs[i].distance;
+    }
+
+    let itineraryDurationMin = ((parseInt((new Date(itinerary.endTime)).toString().slice(16, 18)) - parseInt((new Date(itinerary.startTime)).toString().slice(16, 18)) + 24)%24)*60 + (parseInt((new Date(itinerary.endTime)).toString().slice(19, 21)) - parseInt((new Date(itinerary.startTime)).toString().slice(19, 21))); 
     // console.log(`${typeof itineraryDurationMin}`)
     let summa = <div key={0} style={{  borderRadius: "10px", fontSize: "14px", textAlign: "left", height: "110px", backgroundColor: "#EAFFD0", paddingLeft: '7px', paddingTop: "2px"}}>
     <div style={{fontWeight: "bold", color: "rgba(139,194,76,1)"}}>Summary</div>
@@ -248,7 +321,9 @@ export default function Itinerary1(props) {
     
         
       {/* itinerary.duration/60).toFixed(0) <= 59? (itinerary.duration/60).toFixed(2):`${((itinerary.duration/60)/60).toFixed(0)}hrs ${((itinerary.duration/60)%60).toFixed(2)}`  */}
-        <div className="scroll1" style={{overflow: "auto", width: "inherit", height:"60px"}}>{legSummaryIcons}</div>
+        <div className="scroll1" style={{overflow: "auto", width: "inherit", height:"60px"}}>{legSummaryIcons}  <div style={{marginTop: "3px", fontSize: "13px"}}><div style={{fontWeight: "600", display: "inline"}}>Dist:</div> <div style={{display: "inline"}}>{(itineraryDistanceMtrs*0.00062137).toFixed(2)} miles</div> </div> </div>
+
+        
         
 
         {/* Total Walk: {(itinerary.walkDistance*0.00062137).toFixed(2)} miles <br /> */}
@@ -263,10 +338,10 @@ export default function Itinerary1(props) {
   return (
     <>
         <div style={{height: "100%"}}>
-            <div className="card h-75" style={{borderRadius: "15px", margin: "auto", marginTop: ".7rem",  width: "270px"}}>
+            <div className="card h-75" style={{borderRadius: "15px", margin: "auto", marginTop: ".7rem",  width: "88%"}}>
             <div className="card-body">
                 <div className="summary">
-                    <h5 className="card-title">Itinerary {props.kth + 1}</h5>
+                    <h5 className="card-title">Preference {props.kth + 1}</h5>
                     <div>{tripSummary}</div>
                 </div>
                 <div className="steps" style={{marginTop: "5px"}}>

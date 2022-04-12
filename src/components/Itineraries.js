@@ -95,7 +95,7 @@ const Itineraries = React.memo( (props) => {
         }
 
         for(let i = 0; i<props.plan.itineraries.length; i++){
-          tnails.push(<div key={i} style={{paddingLeft: "3px", paddingTop: "7px"}}>{i+1} Itinerary</div>)
+          tnails.push(<div key={i} style={{paddingLeft: "3px", paddingTop: "7px"}}>Preference {i+1}</div>)
         }
 
         // let list2 = [];
@@ -118,16 +118,20 @@ const Itineraries = React.memo( (props) => {
 
   const onClickThumbEvent = (curInd, curItem) => {
 
-    
-    
-    // setTest(test + 1);
+    // curItem.props.style.border = "2px solid red"
+    var x = document.getElementsByClassName('thumb selected');
+    x[0].classList.remove("selected");
+
+    var list = document.querySelectorAll(`[aria-label="slide item ${curInd + 1}"]`);
+    list[0].classList.add("selected");
+    console.log(list);
 
     // document.getElementsByClassName("carousel carousel-slider").style.visibility = "visible";
 
     
 
     console.log("onClickThumbEvent...");
-    console.log(curInd);
+    console.log(curItem);
     
     // if(curInd !== pushedIndex){
       cards.push(rows[curInd]);
@@ -204,7 +208,7 @@ const Itineraries = React.memo( (props) => {
     {/* cl === 1? 100: (cl === 2? 50: 33.3)  */}
     {/* `${cl === 1? 20: (cl === 2? 40: 60)}%` */}
       {/* <div style={{width: `${cl === 1? 20: (cl === 2? 40: 60)}%`, margin: "auto", padding: "auto"}}>  */}
-      <Carousel axis={'horizontal'} infiniteLoop={false} centerMode = {true} centerSlidePercentage={100} onClickThumb={onClickThumbEvent} showThumbs={true} showArrows={true} renderThumbs={thumbnails} showIndicators={false} showStatus={true} thumbWidth={88} >
+      <Carousel axis={'horizontal'} infiniteLoop={false} centerMode = {true} centerSlidePercentage={100} autoFocus={false} onClickThumb={onClickThumbEvent} showThumbs={true} showArrows={true} renderThumbs={thumbnails} showIndicators={false} showStatus={true} thumbWidth={98} >
       {/* cl === 1? 100: (cl === 2? 50: 33.3) */}
         {cards}
       </Carousel>
